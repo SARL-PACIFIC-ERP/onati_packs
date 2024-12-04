@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_pack_line_form" model="ir.ui.view">
+        <field name="name">product.pack.line.sale.form.inherit.price</field>
+        <field name="model">product.pack.line</field>
+        <field name="inherit_id" ref="sale_product_pack.product_pack_line_form" />
+        <field name="arch" type="xml">
+            <field name="sale_discount" position="replace">
+                <field name="parent_product_id" invisible="True"></field>
+                <field name="sale_price" invisible="parent_product_id.pack_component_price != 'onati'" />
+            </field>
+        </field>
+    </record>
+    <record id="product_pack_line_tree" model="ir.ui.view">
+        <field name="name">product.pack.line.sale.tree.inherit.price</field>
+        <field name="model">product.pack.line</field>
+        <field name="inherit_id" ref="sale_product_pack.product_pack_line_tree" />
+        <field name="arch" type="xml">
+            <field name="sale_discount" position="replace">
+                <field name="sale_price" column_invisible="parent.pack_component_price != 'onati'" />
+            </field>
+        </field>
+    </record>
+    
+    <!-- Hide price fields for onati packs parent line -->
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree" position="inside">
+                <field name="pack_component_price" column_invisible="True" />
+                <field name="pack_type" column_invisible="True" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="attributes">
+                <attribute name="invisible">pack_type == 'detailed' and pack_component_price == 'onati'</attribute>
+            </xpath><xpath expr="//field[@name='order_line']/tree//field[@name='price_total']" position="attributes">
+                <attribute name="invisible">pack_type == 'detailed' and pack_component_price == 'onati'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="attributes">
+                <attribute name="invisible">pack_type == 'detailed' and pack_component_price == 'onati'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

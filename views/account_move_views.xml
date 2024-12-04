@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.pack.price</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='invoice_tab']/field[@name='invoice_line_ids']/tree" position="inside">
+                <field name="pack_component_price" column_invisible="True" />
+                <field name="pack_type" column_invisible="True" />
+            </xpath>
+            <xpath expr="//page[@name='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="invisible">pack_type == 'detailed' and pack_component_price == 'onati'</attribute>
+            </xpath>
+            <xpath expr="//page[@name='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="attributes">
+                <attribute name="invisible">pack_type == 'detailed' and pack_component_price == 'onati'</attribute>
+            </xpath>
+            <xpath expr="//page[@name='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_total']" position="attributes">
+                <attribute name="invisible">pack_type == 'detailed' and pack_component_price == 'onati'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

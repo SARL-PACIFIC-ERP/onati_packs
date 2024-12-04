@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Hid price information for onati packs -->
+    <template id="pe_custom_sale_onati" inherit_id="pe_custom_report.pe_custom_sale_onati">
+        <xpath expr="//table[@name='sale_line_table']/tbody//td[@name='td_priceunit']/span" position="attributes">
+            <attribute name="t-if">not (line.pack_type == 'detailed' and line.pack_component_price == 'onati')</attribute>         
+        </xpath>
+        <xpath expr="//table[@name='sale_line_table']/tbody//td[@name='td_subtotal']/span" position="attributes">
+            <attribute name="t-if">not (line.pack_type == 'detailed' and line.pack_component_price == 'onati')</attribute>         
+        </xpath>
+    </template>
+
+</odoo>
