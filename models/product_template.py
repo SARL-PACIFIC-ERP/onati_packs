@@ -7,8 +7,18 @@ class ProductTemplate(models.Model):
 
     pack_component_price = fields.Selection(selection_add=[("onati", "ONATi")])
 
-    @api.onchange('pack_component_price')
-    def _onchange_pack_component_price(self):
-        if self.pack_component_price == "onati":
-            self.list_price = 0
+    list_price = fields.Float(compute="_compute_list_price", store=True)
+    
+    @api.depends('pack_ok','pack_type','pack_component_price', 'pack_line_ids')
+    def _compute_list_price(self):
+        """ List price computation - occurs only for ONATi packs
+        """
+        for record in self:
+            if record.pack_ok and record.pack_type == 'detailed' and record.pack_component_price == 'onati':
+                price = 0.0
+                for line in record.pack_line_ids:
+                    price += line.sale_price
+                record.list_price = price
+
+
     

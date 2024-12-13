@@ -1,6 +1,6 @@
 {
     "name": "Packs ONATi",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.1.0",
     "category": "Sales",
     "summary": "Customization of product pack and sale product pack to match ONATi specific needs",
     "website": "https://www.pacific-erp.com",

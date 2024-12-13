@@ -1,5 +1,5 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import _, api, fields, models
+from odoo import _, api, models
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -47,6 +47,9 @@ class SaleOrderLine(models.Model):
         pp = self.pack_parent_line_id.product_id or False
         if pp and pp.pack_ok and pp.pack_type == 'detailed' and pp.pack_component_price == 'onati':
             price = pp.pack_line_ids.filtered(lambda l: l.product_id == self.product_id).sale_price
+        # Parent pack price should always be 0
+        elif self.product_id.pack_ok and self.product_id.pack_type == 'detailed' and self.product_id.pack_component_price == 'onati':
+            price = 0.0
         else:
             price = super()._get_display_price()
         return price
